@@ -48,3 +48,14 @@ h2 {
     border-radius: 8px;
 }
 
+.close {
+    float: right; 
+    font-size: 28px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    color: #aaa; 
+}
+
+.close:hover {
+    color: red;
+} 
