@@ -55,7 +55,6 @@ async function displayPromos() {
         promoDiv.className = 'promo-item'
         promoDiv.innerHTML = `
             <h3>${promo.name}</h3>
-            <p>ID de la Promo: ${_id}</p>
             <p>Date de début: ${formatStartDate}</p>
             <p>Date de fin: ${formatEndDate}</p>
             <p>Description: ${promo.formationDescription}</p>

@@ -27,6 +27,7 @@ h2 {
         border-radius: 5px;
     }
 }
+
 .modal {
     display: none; 
     position: fixed;
@@ -37,7 +38,25 @@ h2 {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4); 
 }
-
+#editForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    input {
+        display: flex;
+        width: 20vh;
+        border-radius: 5px;
+    }
+    button {
+        padding: 10px ;
+        margin-top: 20px;
+        align-self: center;
+        border-radius: 15px;
+    }
+    h3 {
+        text-align: center;
+    }
+}
 .modal-content {
     background-color: #fff;
     margin: 10% auto;
@@ -48,13 +67,3 @@ h2 {
     border-radius: 8px;
 }
 
-.close {
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover {
-    color: red;
-}

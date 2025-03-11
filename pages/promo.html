@@ -41,26 +41,25 @@
         </div>
 
         <div id="editModal" class="modal">
+
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <h3>Modifier la Promo</h3>
                 <form id="editForm">
                     <input type="hidden" id="editId">
                     <div>
                         <label for="editName">Nom de la promotion:</label>
-                        <input type="text" id="editName" required>
+                        <input type="text" id="editName">
                     </div>
                     <div>
                         <label for="editStartDate">Date de début:</label>
-                        <input type="date" id="editStartDate" required>
+                        <input type="date" id="editStartDate">
                     </div>
                     <div>
                         <label for="editEndDate">Date de fin:</label>
-                        <input type="date" id="editEndDate" required>
+                        <input type="date" id="editEndDate">
                     </div>
                     <div>
-                        <label for="editFormationDescription">Description de la formation:</label>
-                        <textarea id="editFormationDescription" required></textarea>
+                        <label for="editFormationDescription">Description:</label>
+                        <input id="editFormationDescription">
                     </div>
                     <button type="submit">Mettre à jour</button>
                 </form>
