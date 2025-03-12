@@ -1,61 +1,194 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+}
 
+header h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #444;
 }
-header {
-    h1 {
-        text-align: center;
-        padding: 20px;
-        font-size: 3rem;
-    }
-}
+
 h2 {
     text-align: center;
-    padding: 20px;
-    font-size: 2.5rem;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    margin: 20px 0;
+    width: 100%;
 }
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    gap: 40px;
+}
+
 #addForm {
+    background: #fff;
     padding: 20px;
-    input {
-        width: 20vh;
-        display: flex;
-        border-radius: 5px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    margin-top: 12vh;
+    button:hover {
+        background: #1cab47;
     }
 }
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background: #007BFF;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #1cab47;
+}
+button:last-child:hover {
+    background:red;
+}
+.promos-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+}
+
+#listPromos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 40px;
+}
+
+.promo-item {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.promo-item h3 {
+    margin-bottom: 10px;
+    color: #007BFF;
+}
+
+.promo-item button {
+    margin-top: 10px;
+    width: 100px;
+}
+
+#editModal {
+    top: 50;
+}
+
 .modal {
-    display: none; 
+    display: none;
     position: fixed;
-    z-index: 1;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4); 
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-content {
-    background-color: #fff;
-    margin: 10% auto;
+    background: white;
     padding: 20px;
-    border: 1px solid #ddd;
-    width: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 95%;
+    max-width: 400px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .close {
-    float: right; 
-    font-size: 28px; 
-    font-weight: bold; 
-    cursor: pointer; 
-    color: #aaa; 
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #007BFF;
 }
 
 .close:hover {
+    scale: 1.1;
     color: red;
-} 
+}
+
+#editForm button {
+    display: block;
+    margin: 10px auto 0;
+    padding-top: 10px;
+}
+#editForm button:hover {
+    background: #1cab47;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 14px;
+    background: #fff;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+        align-items: center;
+    }
+    #addForm {
+        margin-top: 20px;
+    }
+    #listPromos {
+        display: grid;
+        grid-template-columns: 1fr;
+        align-items: center;
+    }
+}
