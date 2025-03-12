@@ -48,7 +48,7 @@ async function displayPromos() {
     listPromos.innerHTML = ""
 
     promos.forEach(promo => {
-        const _id = promo._id
+        
         const formatStartDate = promo.startDate.split('T')[0]
         const formatEndDate = promo.endDate.split('T')[0]
         const promoDiv = document.createElement('div')
@@ -59,8 +59,10 @@ async function displayPromos() {
             <p>Date de début: ${formatStartDate}</p>
             <p>Date de fin: ${formatEndDate}</p>
             <p>Description: ${promo.formationDescription}</p>
-            <button onclick="editPromo('${_id}')">Modifier</button>
-            <button onclick="deletePromo('${_id}')">Supprimer</button>
+            <button onclick="editPromo('${promo._id}')">Modifier</button>
+            <button onclick="deletePromo('${promo._id}')">Supprimer</button>
+            <a href="./youcefstudent.html?promoId=${promo._id}">Liste des étudiants</a>
+
         `
         listPromos.appendChild(promoDiv)
     })
