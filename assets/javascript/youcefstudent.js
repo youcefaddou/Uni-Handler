@@ -26,20 +26,64 @@ async function displayStudents(promoId) {
     listStudents.innerHTML = "";
 
     if (promo.students && promo.students.length > 0) {
-        promo.students.forEach(student => {
+        for (const student of promo.students) {
             const studentDiv = document.createElement('div');
             studentDiv.className = 'student-item';
+
+            //construire l'URL de l'avatar
+            const avatarUrl = `${urlBase}promos/${promoId}/students/${student._id}/avatar`;
+          
+
+            //charger l'avatar de manière asynchrone
+            const avatarSrc = await fetchAvatar(avatarUrl);
+
+            //créer une balise img pour l'avatar
+            const avatarImg = document.createElement('img');
+            avatarImg.src = avatarSrc;
+            avatarImg.alt = "Avatar";
+            avatarImg.width = 50;
+
+            // Ajouter l'image au DOM
             studentDiv.innerHTML = `
                 <h3>${student.firstName} ${student.lastName}</h3>
-                <p>Âge: ${student.age}</p>
-                <p>Avatar: <img src="${urlBase}promos/${promoId}/students/${student._id}/avatar" alt="Avatar" width="50"></p>
-                <button onclick="editStudent('${promoId}', '${student._id}')">Modifier</button>
-                <button onclick="deleteStudent('${promoId}', '${student._id}')">Supprimer</button>
+                <p class="age">Âge: ${student.age}</p>
+                <p class="avatarimage">Avatar: </p>
             `;
+            studentDiv.querySelector('.avatarimage').appendChild(avatarImg);
+
+            // Ajouter les boutons Modifier et Supprimer
+            const editButton = document.createElement('button');
+            editButton.textContent = "Modifier";
+            editButton.onclick = () => editStudent(promoId, student._id);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = "Supprimer";
+            deleteButton.onclick = () => deleteStudent(promoId, student._id);
+
+            studentDiv.appendChild(editButton);
+            studentDiv.appendChild(deleteButton);
+
             listStudents.appendChild(studentDiv);
-        });
+        }
     } else {
         listStudents.innerHTML = "<p>Aucun étudiant dans cette promotion.</p>";
+    }
+}
+
+async function fetchAvatar(avatarUrl) {
+    try {
+        const response = await fetch(avatarUrl, {
+            headers: {
+                Authorization: "Bearer " + token, // Ajouter le token d'authentification
+                Accept: "image/jpeg", // Spécifier le type de contenu attendu
+            },
+        })
+        // Convertir la réponse en blob (binaire)
+        const blob = await response.blob()
+        // Créer une URL pour l'image
+        return URL.createObjectURL(blob)
+    } catch (error) {
+        console.error("Erreur lors de la récupération de l'avatar :", error)
     }
 }
 
@@ -48,14 +92,14 @@ function postStudent(promoId) {
     addStudentForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const firstName = document.querySelector('#firstName').value;
-        const lastName = document.querySelector('#lastName').value;
+        const firstName = document.querySelector('#firstName').value
+        const lastName = document.querySelector('#lastName').value
         const age = document.querySelector('#age').value;
-        const avatarFile = document.querySelector('#avatar').files[0];
+        const avatarFile = document.querySelector('#avatar').files[0]
 
         // Vérification des champs obligatoires
         if (!firstName || !lastName || !age || !avatarFile) {
-            console.error("Tous les champs sont obligatoires, y compris l'avatar.");
+            console.error("Tous les champs sont obligatoires, y compris l'avatar.")
             return;
         }
 
@@ -74,7 +118,8 @@ function postStudent(promoId) {
         const response = await fetch(urlBase + `promos/${promoId}/students`, {
             method: "POST",
             headers: {
-                Authorization: "Bearer " + token
+                Authorization: "Bearer " + token,
+                
             },
             body: formData
         });
