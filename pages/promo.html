@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/promostyle.css">
+    <title>Promos</title>
+</head>
+
+<body>
+    <header>
+        <h1>UNI HANDLER</h1>
+    </header>
+    <main>
+        <form id="addForm">
+            <input type="hidden" id="_id">
+            <div>
+                <label for="name">Nom de la promotion:</label>
+                <input type="text" id="name">
+            </div>
+            <div>
+                <label for="name">Date de début:</label>
+                <input type="date" id="startDate">
+            </div>
+            <div>
+                <label for="name">Date de fin:</label>
+                <input type="date" id="endDate">
+            </div>
+            <div>
+                <label for="name">Description:</label>
+                <input type="text" id="formationDescription">
+
+            </div>
+            <button>Envoyer</button>
+        </form>
+        <div id="right-column">
+            <h2>LISTE DES PROMOS</h2>
+            <div id="listPromos">
+            </div>
+        </div>
+
+        <div id="editModal" class="modal">
+
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form id="editForm">
+                    <input type="hidden" id="editId">
+                    <div>
+                        <label for="editName">Nom de la promotion:</label>
+                        <input type="text" id="editName">
+                    </div>
+                    <div>
+                        <label for="editStartDate">Date de début:</label>
+                        <input type="date" id="editStartDate">
+                    </div>
+                    <div>
+                        <label for="editEndDate">Date de fin:</label>
+                        <input type="date" id="editEndDate">
+                    </div>
+                    <div>
+                        <label for="editFormationDescription">Description:</label>
+                        <input id="editFormationDescription">
+                    </div>
+                    <button class="maj" type="submit">Mettre à jour</button>
+                </form>
+            </div>
+        </div>
+
+
+    </main>
+    <footer id="footerContainer">
+        <h4>Uni Handler © Tous droits réservés.</h4>
+    </footer>
+
+    <script src="../assets/javascript/promo.js"></script>
+</body>
+
+</html>
