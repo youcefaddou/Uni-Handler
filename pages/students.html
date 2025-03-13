@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link src="/Uni-Handler/assets/css/studentstyle.css">
+    </link>
+    <title>Etudiants</title>
+</head>
+
+<body>
+    <header>
+        <h1>UNI HANDLER</h1>
+    </header>
+    <main>
+
+        <h2>Les Monsters</h2>
+
+        <form id="addStudentForm">
+            <input type="hidden" id="_id">
+            <div>
+                <label for="firstName">Prénom:</label>
+                <input type="text" id="firstName" required>
+            </div>
+            <div>
+                <label for="lastName">Nom:</label>
+                <input type="text" id="lastName" required>
+            </div>
+            <div>
+                <label for="age">Age:</label>
+                <input type="number" id="age" required>
+            </div>
+            <div>
+                <label for="avatar">Avatar:</label>
+                <input type="file" id="avatar" accept="image/*">
+            </div>
+            <div>
+                <input type="file" class="addStudent" title="addStudent">
+            </div>
+            <button type="submit">Ajouter</button>
+        </form>
+        </div>
+        </div>
+        <div id="listStudents">
+            <div class="student-item">
+               <h3>Alice</h3>
+               <button onclick="openModal('Alice', 'Informations sur Alice...')">Voir plus</button>
+            </div>
+            <div class="student-item">
+               <h3>Bob</h3>
+               <button onclick="openModal('Bob', 'Informations sur Bob...')">Voir plus</button>
+            </div>
+            <div class="student-item">
+               <h3>Charlie</h3>
+               <button onclick="openModal('Charlie', 'Informations sur Charlie...')">Voir plus</button>
+            </div>
+         </div>
+         <div id="modal" class="modal">
+            <div class="modal-content">
+               <span class="close" onclick="closeModal()">&times;</span>
+               <h2 id="modal-title"></h2>
+               <p id="modal-description"></p>
+            </div>
+         </div>
+    </main>
+    <footer id="footerContainer">
+        <h4>Uni Handler © Tous droits réservés.</h4>
+    </footer>
+
+
+
+
+    <script src="/Uni-Handler/assets/javascript/students.js"></script>
+</body>
+
+</html>
