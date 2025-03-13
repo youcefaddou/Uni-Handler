@@ -26,7 +26,6 @@ function postPromos() {
             endDate: document.querySelector('#endDate').value,
             formationDescription: document.querySelector('#formationDescription').value,
         }
-
         const response = await fetch(urlBase + "promos", {
             method: "POST",
             headers: {
@@ -35,7 +34,6 @@ function postPromos() {
             },
             body: JSON.stringify(data)
         })
-
         if (response.ok) {
             displayPromos()
             addForm.reset() //reinitialiser le formulaire
@@ -55,7 +53,6 @@ async function displayPromos() {
         promoDiv.className = 'promo-item'
         promoDiv.innerHTML = `
             <h3>${promo.name}</h3>
-            <p>ID de la Promo: ${_id}</p>
             <p>Date de début: ${formatStartDate}</p>
             <p>Date de fin: ${formatEndDate}</p>
             <p>Description: ${promo.formationDescription}</p>
@@ -135,8 +132,6 @@ editForm.addEventListener('submit', async (e) => {
     if (updateResponse.ok) {
         await displayPromos(); // rafraichir la liste des promos
         editModal.style.display = 'none'
-    } else {
-        console.error("Erreur lors de la mise à jour de la promo")
     }
 })
 
@@ -150,7 +145,6 @@ async function deletePromo(_id) {
             "Content-type": "application/json"
         }
     })
-
     if (response.ok) {
         displayPromos() //rafraîchir la liste des promos
     }
