@@ -57,7 +57,7 @@ async function displayPromos() {
             <p>Date de fin: ${formatEndDate}</p>
             <p>Description: ${promo.formationDescription}</p>
             <button onclick="editPromo('${promo._id}')">Modifier</button>
-            <button onclick="deletePromo('${promo._id}')">Supprimer</button>
+            <button class="deletebutton" onclick="deletePromo('${promo._id}')">Supprimer</button>
             <a href="./youcefstudent.html?promoId=${promo._id}">Liste des étudiants</a>
 
         `
@@ -103,7 +103,7 @@ async function editPromo(_id) {
 
     //fermer la modal lorsque l'user clique en dehors 
     window.onclick = (e) => {
-        if (e.target === editModal) {
+        if (e.target == editModal) {
             editModal.style.display = 'none'
         }
     }
