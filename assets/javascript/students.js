@@ -28,21 +28,59 @@ async function displayStudents(promoId) {
     listStudents.innerHTML = "";
 
     if (promo.students && promo.students.length > 0) {
-        promo.students.forEach(student => {
+        for (const student of promo.students) {
             const studentDiv = document.createElement('div');
             studentDiv.className = 'student-item';
+            // url de l'avatar
+
+            const avatarUrl = `${urlBase}promos/${promoId}/students/${student._id}/avatar`
+            // changer l'avatar de manière asynchrone
+
+            const avatarSrc = await fetchAvatar(avatarUrl)
+
+            // creation de balise img pour l'avatar 
+            const avatarImg = document.createElement('img')
+            avatarImg.src = avatarSrc
+            avatarImg.alt = "Avatar"
+            avatarImg.width = 50
+
+            // puis ajouter l'image au DOM
             studentDiv.innerHTML = `
-                <h3>${student.firstName} ${student.lastName}</h3>
-                <p>Âge: ${student.age}</p>
-                <p>Avatar: <img src="${urlBase}promos/${promoId}/students/${student._id}/avatar" alt="Avatar" width="50"></p>
-                <button onclick="editStudent('${promoId}', '${student._id}')">Modifier</button>
-                <button onclick="deleteStudent('${promoId}', '${student._id}')">Supprimer</button>
-            `;
-            listStudents.appendChild(studentDiv);
-        });
+            <h3>${student.firstName} ${student.lastName} <h3>
+            <p class="age">Âge: ${student.age} </p>
+            <p class="avatarimage">Avatar : </p>
+            `
+            studentDiv.querySelector('.avatarimage').appendChild(avatarImg)
+            const editButton = document.createElement('button')
+            editButton.textContent = "Modifier"
+            editButton.onclick = () => editStudent(promoId, student._id)
+
+            const deleteButton = document.createElement('button')
+            deleteButton.textContent = "Supprimer"
+            deleteButton.onclick = () => deleteStudent(promoId, student._id)
+            studentDiv.appendChild(editButton)
+            studentDiv.appendChild(deleteButton)
+
+            listStudents.appendChild(studentDiv)
+        }
     } else {
-        listStudents.innerHTML = "<p>Aucun étudiant dans cette promotion.</p>";
+        listStudents.innerHTML = "<p>Aucun étudiant dans cette promotion.</p>"
     }
+}
+
+async function fetchAvatar(avatarUrl) {
+    const response = await fetch(avatarUrl, {
+        hearders: {
+            Authorization: "Bearer" + token,
+            Accept: "image/jpeg", //specifier le type de contenu attendu
+
+        },
+    })
+    // convertir la réponse en blob (binaire)
+    const blob = await response.blob()
+    // creer une URL pour l'image
+    return URL.createObjectURL(blob) /* Methode static pour creer  une chaine qui contient l'URL de l'Objet blob */
+
 }
 
 // Fonction pour ajouter un étudiant
@@ -54,43 +92,27 @@ function postStudent(promoId) {
         const lastName = document.querySelector('#lastName').value;
         const age = document.querySelector('#age').value;
         const avatarFile = document.querySelector('#avatar').files[0];
-
-        // Vérification des champs obligatoires
-        if (!firstName || !lastName || !age || !avatarFile) {
-            console.error("Tous les champs sont obligatoires, y compris l'avatar.");
-            return;
-        }
-
-        // Vérification du fichier avatar
-        if (!avatarFile.type.startsWith('image/')) {
-            console.error("Veuillez sélectionner un fichier image valide.");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('firstName', firstName);
-        formData.append('lastName', lastName);
-        formData.append('age', age);
-        formData.append('avatar', avatarFile);
-
+        formData.append('firstName', firstName)
+        formData.append('lastName', lastName)
+        formData.append('age', age)
+        formData.append('avatar', avatarFile)
         const response = await fetch(urlBase + `promos/${promoId}/students`, {
             method: "POST",
             headers: {
-                Authorization: "Bearer " + token
+                Authorization: "Bearer " + token,
+
             },
             body: formData
-        });
+        })
 
         if (response.ok) {
-            const result = await response.json();
-            console.log("Étudiant ajouté avec succès :", result);
-            displayStudents(promoId); // Rafraîchir la liste des étudiants
-            addStudentForm.reset(); // Réinitialiser le formulaire
+            const result = await response.json()
+            displayStudents(promoId) // rafraichir la liste des étudiants
+            addStudentForm.reset() // reinit le formulaire
         } else {
-            const errorData = await response.json(); // Lire le message d'erreur de l'API
-            console.error("Erreur lors de l'ajout de l'étudiant :", errorData);
+            const errorData = await response.json() //lire le message d'erreur de l'API
         }
-    });
+    })
 }
 
 // Fonction pour modifier un étudiant
@@ -106,24 +128,21 @@ async function editStudent(promoId, studentId) {
         document.querySelector('#editAge').value = student.age;
 
         // Affiche la modal
-        editStudentModal.style.display = 'block';
-    } else {
-        console.error("Étudiant non trouvé");
-    }
+        editStudentModal.style.display = 'block'
 
-    // Ferme la modal lorsque l'utilisateur clique sur la croix
-    closeModal.onclick = () => {
-        editStudentModal.style.display = 'none';
-    };
-
-    // Ferme la modal lorsque l'utilisateur clique en dehors de celle-ci
-    window.onclick = (e) => {
-        if (e.target === editStudentModal) {
-            editStudentModal.style.display = 'none';
+        // Ferme la modal lorsque l'utilisateur clique sur la croix
+        closeModal.onclick = () => {
+            editStudentModal.style.display = 'none'
         }
-    };
-}
 
+        // Ferme la modal lorsque l'utilisateur clique en dehors de celle-ci
+        window.onclick = (e) => {
+            if (e.target === editStudentModal) {
+                editStudentModal.style.display = 'none'
+            }
+        }
+    }
+}
 // Écouteur pour le formulaire de modification
 editStudentForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -147,11 +166,9 @@ editStudentForm.addEventListener('submit', async (e) => {
 
     if (response.ok) {
         displayStudents(promoId); // Rafraîchi la liste des étudiants
-        editStudentModal.style.display = 'none'; // Ferme la modal
-    } else {
-        console.error("Erreur lors de la mise à jour de l'étudiant");
+        editStudentModal.style.display = 'none' // Ferme la modal
     }
-});
+})
 
 // Fonction pour supprimer un étudiant
 async function deleteStudent(promoId, studentId) {
@@ -160,7 +177,7 @@ async function deleteStudent(promoId, studentId) {
         headers: {
             Authorization: "Bearer " + token
         }
-    });
+    })
 
     if (response.ok) {
         displayStudents(promoId); // Rafraîchi la liste des étudiants
@@ -172,14 +189,12 @@ async function deleteStudent(promoId, studentId) {
 // Initialisation
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
-    currentPromoId = urlParams.get('promoId'); // Récupére l'ID de la promotion depuis l'URL
+    currentPromoId = urlParams.get('promoId') // Récupére l'ID de la promotion depuis l'URL
 
     if (currentPromoId) {
-        displayStudents(currentPromoId); // Affiche les étudiants de la promotion
-        postStudent(currentPromoId); // Configure l'écouteur d'événement pour l'ajout
-    } else {
-        console.error("ID de la promotion manquant dans l'URL");
+        displayStudents(currentPromoId) // Affiche les étudiants de la promotion
+        postStudent(currentPromoId) // Configure l'écouteur d'événement pour l'ajout
     }
-});
+})
 
 

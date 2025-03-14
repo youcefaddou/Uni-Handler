@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link src="/Uni-Handler/assets/css/studentstyle.css">
-    </link>
+    <link rel="stylesheet" href="../assets/css/studentstyle.css">
     <title>Etudiants</title>
 </head>
 
@@ -36,6 +35,7 @@
                 <input type="file" id="avatar" accept="image/*">
             </div>
             <div>
+                <label for="addStudent">Ajout Etudiant:</label>
                 <input type="file" class="addStudent" title="addStudent">
             </div>
             <button type="submit">Ajouter</button>
@@ -45,16 +45,24 @@
         <div id="listStudents">
             <div class="student-item">
                <h3>Alice</h3>
-               <button onclick="openModal('Alice', 'Informations sur Alice...')">Voir plus</button>
+               <button onclick="openModal('nananaDude', 'Informations sur bananaDude...')">Voir plus</button>
             </div>
             <div class="student-item">
                <h3>Bob</h3>
-               <button onclick="openModal('Bob', 'Informations sur Bob...')">Voir plus</button>
+               <button onclick="openModal('dancingQueen', 'Informations sur dancingQueen...')">Voir plus</button>
             </div>
             <div class="student-item">
                <h3>Charlie</h3>
-               <button onclick="openModal('Charlie', 'Informations sur Charlie...')">Voir plus</button>
+               <button onclick="openModal('froggyElvis', 'Informations sur froggyElvis...')">Voir plus</button>
             </div>
+            <div class="student-item">
+                <h3>Charlie</h3>
+                <button onclick="openModal('shubaBlue', 'Informations sur shubaBlue...')">Voir plus</button>
+             </div>
+             <div class="student-item">
+                <h3>Charlie</h3>
+                <button onclick="openModal('tirexBro', 'Informations sur tirexBro...')">Voir plus</button>
+             </div>
          </div>
          <div id="modal" class="modal">
             <div class="modal-content">
@@ -71,7 +79,7 @@
 
 
 
-    <script src="/Uni-Handler/assets/javascript/students.js"></script>
+    <script src="../assets/javascript/students.js"></script>
 </body>
 
 </html>
