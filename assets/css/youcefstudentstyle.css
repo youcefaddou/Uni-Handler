@@ -46,6 +46,19 @@ main {
     gap: 40px;
 }
 
+#errorFirstName,#errorLastName,#errorAge, #errorAvatar {
+    color: red;
+    font-size: 12px;
+    padding: 5px;
+    text-align: center;
+}
+#editErrorFirstName,#editErrorLastName,#editErrorAge, #editErrorAvatar {
+    color: red;
+    font-size: 12px;
+    padding: 5px;
+    text-align: center;
+}
+
 #addStudentForm {
     background: #fff;
     padding: 20px;

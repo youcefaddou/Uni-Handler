@@ -6,7 +6,56 @@ const editStudentModal = document.querySelector('#editStudentModal')
 const closeModal = document.querySelector('.close')
 const editStudentForm = document.querySelector('#editStudentForm')
 
-let currentPromoId = null 
+const errorFirstName = document.querySelector('#errorFirstName')
+const errorLastName = document.querySelector('#errorLastName')
+const errorAge = document.querySelector('#errorAge')
+const errorAvatar = document.querySelector('#errorAvatar')
+
+let currentPromoId = null
+
+function manageErrors(errors, isEditModal = false) {
+    if (isEditModal) {
+        //reinitialiser les erreurs dans la modal d'edition
+        document.querySelector('#editErrorFirstName').textContent = ''
+        document.querySelector('#editErrorLastName').textContent = ''
+        document.querySelector('#editErrorAge').textContent = ''
+        document.querySelector('#editErrorAvatar').textContent = ''
+    } else {
+        errorFirstName.textContent = ''
+        errorLastName.textContent = ''
+        errorAge.textContent = ''
+        errorAvatar.textContent = ''
+    }
+
+    if (errors.firstName) {
+        if (isEditModal) {
+            document.querySelector('#editErrorFirstName').textContent = errors.firstName.message
+        } else {
+            errorFirstName.textContent = errors.firstName.message
+        }
+    }
+    if (errors.lastName) {
+        if (isEditModal) {
+            document.querySelector('#editErrorLastName').textContent = errors.lastName.message
+        } else {
+            errorLastName.textContent = errors.lastName.message
+        }
+    }
+    if (errors.age) {
+        if (isEditModal) {
+            document.querySelector('#editErrorAge').textContent = "L'âge maximum autorisé est de 62 ans. Veuillez taper un nouveau chiffre."
+        } else {
+            errorAge.textContent = "L'âge maximum autorisé est de 62 ans. Veuillez taper un nouveau chiffre."
+        }
+    }
+    if (errors.avatar) {
+        if (isEditModal) {
+            document.querySelector('#editErrorAvatar').textContent = "Veuillez choisir une image en tant qu'avatar."
+        } else {
+            errorAvatar.textContent = "Veuillez choisir une image en tant qu'avatar."
+        }
+    }
+}
 
 //fonction pour récupérer une promotion par son ID
 async function getPromoById(promoId) {
@@ -88,6 +137,7 @@ function postStudent(promoId) {
         const lastName = document.querySelector('#lastName').value
         const age = document.querySelector('#age').value;
         const avatarFile = document.querySelector('#avatar').files[0]
+        //definir un set de clés et valeurs pour le formulaire au meme format que sur la doc API
         const formData = new FormData()
         formData.append('firstName', firstName)
         formData.append('lastName', lastName)
@@ -107,7 +157,8 @@ function postStudent(promoId) {
             displayStudents(promoId) // rafraichir la liste des étudiants
             addStudentForm.reset() // reinit le formulaire
         } else {
-            const errorData = await response.json() //lire le message d'erreur de l'API
+            const errorData = await response.json()
+            manageErrors(errorData.errors)
         }
     })
 }
@@ -159,6 +210,9 @@ editStudentForm.addEventListener('submit', async (e) => {
     if (response.ok) {
         displayStudents(promoId) // Rafraîchir la liste des étudiants
         editStudentModal.style.display = 'none'
+    } else {
+        const errorData = await response.json()
+        manageErrors(errorData, true) 
     }
 })
 
@@ -180,6 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
     currentPromoId = urlParams.get('promoId') //recupérer l'ID de la promotion depuis l'URL
     if (currentPromoId) {
         displayStudents(currentPromoId)
-        postStudent(currentPromoId) 
-    } 
+        postStudent(currentPromoId)
+    }
 })

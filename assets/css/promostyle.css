@@ -55,6 +55,13 @@ main {
     }
 }
 
+#errorName, #errorStartDate, #errorEndDate, #errorFormationDescription {
+    color: red;
+    font-size: 12px;
+    padding: 5px;
+    text-align: center;
+}
+
 input {
     width: 100%;
     padding: 10px;

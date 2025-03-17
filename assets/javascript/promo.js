@@ -6,6 +6,33 @@ const editModal = document.querySelector('#editModal')
 const closeModal = document.querySelector('.close')
 const editForm = document.querySelector('#editForm')
 
+const errorName = document.querySelector('#errorName')
+const errorStartDate = document.querySelector('#errorStartDate')
+const errorEndDate = document.querySelector('#errorEndDate')
+const errorFormationDescription = document.querySelector('#errorFormationDescription')
+
+let editMode = false
+
+function manageErrors(errors) {
+
+    errorName.textContent = ""
+    errorStartDate.textContent = ""
+    errorEndDate.textContent = ""
+    errorFormationDescription.textContent = ""
+    if (errors.name) {
+        errorName.textContent = errors.name.message;
+    }
+    if (errors.startDate) {
+        errorStartDate.textContent = errors.startDate.message;
+    }
+    if (errors.endDate) {
+        errorEndDate.textContent = errors.endDate.message;
+    }
+    if (errors.formationDescription) {
+        errorFormationDescription.textContent = errors.formationDescription.message;
+    }
+}
+
 async function getPromos() {
     const response = await fetch(urlBase + "promos/", {
         method: "GET",
@@ -15,6 +42,7 @@ async function getPromos() {
     })
     const data = await response.json()
     return data
+    
 }
 
 function postPromos() {
@@ -37,6 +65,9 @@ function postPromos() {
         if (response.ok) {
             displayPromos()
             addForm.reset() //reinitialiser le formulaire
+        } else {
+            const errorData = await response.json()
+            manageErrors(errorData.errors)
         }
     })
 }
@@ -75,12 +106,6 @@ async function editPromo(_id) {
 
     if (response.ok) {
         const promo = await response.json()
-
-        //verif que startDate et endDate sont definis
-        if (!promo.startDate || !promo.endDate) {
-            console.error("Les dates de la promotion sont manquantes")
-            return
-        }
 
         // formater les dates au format yyyy-MM-dd
         const formattedStartDate = promo.startDate.split('T')[0]
@@ -130,8 +155,11 @@ editForm.addEventListener('submit', async (e) => {
     })
 
     if (updateResponse.ok) {
-        await displayPromos(); // rafraichir la liste des promos
+        await displayPromos() // rafraichir la liste des promos
         editModal.style.display = 'none'
+    } else {
+        const errorData = await updateResponse.json() 
+            manageErrors(errorData.errors)
     }
 })
 

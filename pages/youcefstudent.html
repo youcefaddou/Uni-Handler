@@ -16,18 +16,22 @@
         <form id="addStudentForm">
             <input type="hidden" id="_id">
             <div>
+                <p id="errorFirstName"></p>
                 <label for="firstName">Prénom:</label>
                 <input type="text" id="firstName" required>
             </div>
             <div>
+                <p id="errorLastName"></p>
                 <label for="lastName">Nom:</label>
                 <input type="text" id="lastName" required>
             </div>
             <div>
+                <p id="errorAge"></p>
                 <label for="age">Âge:</label>
                 <input type="number" id="age" required>
             </div>
             <div>
+                <p id="errorAvatar"></p>
                 <label for="avatar">Avatar:</label>
                 <input type="file" id="avatar" accept="image/*">
             </div>
@@ -44,18 +48,22 @@
                 <form id="editStudentForm">
                     <input type="hidden" id="editStudentId">
                     <div>
+                        <p id="editErrorFirstName"></p>
                         <label for="editFirstName">Prénom:</label>
-                        <input type="text" id="editFirstName" required>
+                        <input type="text" id="editFirstName">
                     </div>
                     <div>
+                        <p id="editErrorLastName"></p>
                         <label for="editLastName">Nom:</label>
-                        <input type="text" id="editLastName" required>
+                        <input type="text" id="editLastName">
                     </div>
                     <div>
+                        <p id="editErrorAge"></p>
                         <label for="editAge">Âge:</label>
-                        <input type="number" id="editAge" required>
+                        <input type="number" id="editAge">
                     </div>
                     <div>
+                        <p id="editErrorAvatar"></p>
                         <label for="editAvatar">Avatar:</label>
                         <input type="file" id="editAvatar" accept="image/*">
                     </div>
